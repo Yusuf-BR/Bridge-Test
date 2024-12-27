@@ -1,7 +1,7 @@
 // src/pages/AdminPage.js
 import React, { useState } from "react";
-import CourseList from "../components/CourseList";
-import CourseForm from "../components/CourseForm";
+import CourseList from "./pages/components/CourseList";
+import CourseForm from "./pages/components/CourseForm";
 
 const AdminPage = () => {
   const [courseToEdit, setCourseToEdit] = useState(null);
