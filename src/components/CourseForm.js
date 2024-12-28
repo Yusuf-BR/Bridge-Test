@@ -1,63 +1,147 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate instead of useHistory
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { createCourse, updateCourse } from "../api/courseAPI";
+import { Layout, Menu, Form, Input, Button, Typography, message } from "antd";
+import { UnorderedListOutlined, PlusCircleOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
+
+const { Title } = Typography;
+const { Header, Content } = Layout;
 
 const CourseForm = ({ courseToEdit }) => {
-  const [title, setTitle] = useState("");
-  const [price, setPrice] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const navigate = useNavigate(); // Replace useHistory with useNavigate
+  const navigate = useNavigate(); // useNavigate replaces useHistory
 
-  useEffect(() => {
-    if (courseToEdit) {
-      setTitle(courseToEdit.title);
-      setPrice(courseToEdit.price);
-      setImageUrl(courseToEdit.imageUrl);
+  // Handle form submission
+  const handleSubmit = async (values) => {
+    try {
+      if (courseToEdit) {
+        // Update course data
+        await updateCourse(courseToEdit._id, values);
+        message.success("Course updated successfully!");
+      } else {
+        // Create new course
+        await createCourse(values);
+        message.success("Course added successfully!");
+      }
+
+      // Redirect to home page after submission
+      navigate("/");
+    } catch (error) {
+      message.error("An error occurred, please try again.");
     }
-  }, [courseToEdit]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const courseData = { title, price, imageUrl };
-
-    if (courseToEdit) {
-      await updateCourse(courseToEdit._id, courseData);
-    } else {
-      await createCourse(courseData);
-    }
-
-    navigate("/"); // Use navigate to redirect to the homepage after submitting
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>{courseToEdit ? "Update Course" : "Add Course"}</h2>
-      <div>
-        <label>Title:</label>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Price:</label>
-        <input
-          type="number"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-        />
-      </div>
-      <div>
-        <label>Image URL:</label>
-        <input
-          type="text"
-          value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
-        />
-      </div>
-      <button type="submit">{courseToEdit ? "Update" : "Add"} Course</button>
-    </form>
+    <Layout style={{ minHeight: "100vh" }}>
+      {/* Horizontal Navbar */}
+      <Header style={{ background: "#fff", padding: 0 }}>
+        <Menu
+          mode="horizontal"
+          defaultSelectedKeys={['2']}
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            fontSize: '18px', // Enlarging font size
+          }}
+        >
+          <Menu.Item
+            key="1"
+            icon={<UnorderedListOutlined />}
+            style={{
+              color: "#6A4C7C", // Majestic purple color
+              fontWeight: 'bold',
+              fontSize: '20px', // Larger font size for the menu items
+            }}
+            hoverStyle={{
+              color: "#D6B800", // Hover color effect
+            }}
+          >
+            {/* Replaced anchor tag with Link for client-side navigation */}
+            <Link to="/">Course List</Link>
+          </Menu.Item>
+
+          <Menu.Item
+            key="2"
+            icon={<PlusCircleOutlined />}
+            style={{
+              color: "#6A4C7C", // Majestic purple color
+              fontWeight: 'bold',
+              fontSize: '20px', // Larger font size for the menu items
+            }}
+            hoverStyle={{
+              color: "#D6B800", // Hover color effect
+            }}
+          >
+            {/* Replaced anchor tag with Link for client-side navigation */}
+            <Link to="/add-course">Add/Update Course</Link> {/* Updated text */}
+          </Menu.Item>
+        </Menu>
+      </Header>
+
+      <Layout style={{ padding: "0 24px 24px" }}>
+        <Content
+          style={{
+            padding: 24,
+            margin: 0,
+            minHeight: 280,
+            backgroundColor: "#f0f2f5",
+          }}
+        >
+          <Title level={2} style={{ color: "#6A4C7C" }}>
+            {courseToEdit ? "Update Course" : "Add Course"} {/* Updated title */}
+          </Title>
+
+          <Form
+            layout="vertical"
+            onFinish={handleSubmit} // Handles form submission
+            style={{ maxWidth: "600px", margin: "0 auto" }}
+            initialValues={{
+              title: courseToEdit ? courseToEdit.title : "",
+              price: courseToEdit ? courseToEdit.price : "",
+              imageUrl: courseToEdit ? courseToEdit.imageUrl : "",
+            }}
+          >
+            <Form.Item
+              label="Title"
+              name="title"
+              rules={[{ required: true, message: "Please input the title!" }]}
+            >
+              <Input placeholder="Enter course title" />
+            </Form.Item>
+
+            <Form.Item
+              label="Price (DT/month)"
+              name="price"
+              rules={[{ required: true, message: "Please input the price!" }]}
+            >
+              <Input type="number" placeholder="Enter price" />
+            </Form.Item>
+
+            <Form.Item
+              label="Image URL"
+              name="imageUrl"
+              rules={[{ required: true, message: "Please input the image URL!" }]}
+            >
+              <Input placeholder="Enter image URL" />
+            </Form.Item>
+
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                style={{
+                  backgroundColor: "#D6B800",
+                  borderColor: "#D6B800",
+                  width: "100%",
+                }}
+              >
+                {courseToEdit ? "Update" : "Add"} Course {/* Updated button text */}
+              </Button>
+            </Form.Item>
+          </Form>
+        </Content>
+      </Layout>
+    </Layout>
   );
 };
 
