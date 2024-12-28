@@ -1,0 +1,123 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .header {
+    padding: 16px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .header img {
+    height: 40px;
+  }
+  
+  .hero {
+    position: relative;
+    height: 500px;
+    background: url('https://scontent.ftun10-2.fna.fbcdn.net/v/t1.6435-9/71521269_2274495499344689_5486023712148815872_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=127cfc&_nc_ohc=FdQgMgRlrucQ7kNvgFlNNj6&_nc_zt=23&_nc_ht=scontent.ftun10-2.fna&_nc_gid=AnlWDyY5xtv0hMBFPQdHmMk&oh=00_AYDEOyO7qpDNWcHZtVssqrRVuqsZqFpsE6y_qaATZid7iQ&oe=6797C5F4') center/cover no-repeat;
+  }
+  
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .hero-content {
+    background: white;
+    padding: 32px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .hero-content h1 {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+  
+  .hero-content p {
+    font-size: 18px;
+    margin-bottom: 24px;
+  }
+  
+  .button {
+    background: #e11d48;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    background: #be123c;
+  }
+  
+  .courses {
+    padding: 32px 16px;
+    text-align: center;
+  }
+  
+  .course-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .course-item {
+    background: #f9f9f9;
+    padding: 16px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
+  .course-item img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    margin-left: 30px;
+  }
+  
+  .contact {
+    padding: 32px 16px;
+    background: #f9b454;
+    border-radius: 50px;
+    max-width: 600px;
+    margin: 32px auto;
+  }
+  
+  .contact label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .contact input,
+  .contact textarea {
+    width: 96%;
+    padding: 12px;
+    border-radius: 50px;
+    border: 1px solid #ddd;
+    margin-bottom: 16px;
+  }
+  
+  .contact button {
+    width: 100%;
+    background: #e11d48;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+  }
+  
+  .contact button:hover {
+    background: #be123c;
+  }

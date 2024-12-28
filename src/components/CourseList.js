@@ -71,7 +71,7 @@ const CourseList = () => {
               color: "#D6B800", // Hover color effect
             }}
           >
-            <Link to="/">Home</Link> {/* Changed this to point to the Home page */}
+            <Link to="/">Course List</Link>
           </Menu.Item>
           <Menu.Item
             key="2"
@@ -146,4 +146,4 @@ const CourseList = () => {
   );
 };
 
-export default CourseList;
+export default CourseList

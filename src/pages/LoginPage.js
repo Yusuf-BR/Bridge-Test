@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { Form, Input, Button, message } from "antd";
 import { useNavigate } from "react-router-dom";
 
-// Refined Luxurious Styles
+// Light red and yellow color scheme
 const styles = {
   container: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     minHeight: "100vh",
-    background: "linear-gradient(135deg, #8E44AD, #F39C12)", // Smooth gradient blend
+    background: "linear-gradient(135deg, #F28D8D, #F7DC6F)", // Light red and light yellow gradient
     fontFamily: "'Poppins', sans-serif",
     color: "#fff",
     backgroundSize: "cover",
@@ -18,43 +18,36 @@ const styles = {
     boxSizing: "border-box",
   },
   content: {
-    backgroundColor: "#2C3E50",
-    borderRadius: "25px",
+    backgroundColor: "#fff",
+    borderRadius: "15px",
     padding: "40px 50px",
-    boxShadow: "0 15px 30px rgba(0, 0, 0, 0.25)",
+    boxShadow: "0 15px 30px rgba(0, 0, 0, 0.1)",
     width: "100%",
     maxWidth: "450px",
-    animation: "fadeIn 1s ease-out",
+    boxSizing: "border-box",
   },
   heading: {
     fontSize: "2.5rem",
     fontWeight: "600",
-    color: "#F1C40F", // Bold golden color for warmth
-    marginBottom: "40px",
-    letterSpacing: "2px",
-    textTransform: "uppercase",
-    textShadow: "2px 2px 5px rgba(0, 0, 0, 0.6)", // Soft glowing text
+    color: "#D94F4F", // Light red color
+    marginBottom: "30px",
   },
   formItem: {
-    marginBottom: "20px",
+    marginBottom: "25px",
   },
   input: {
-    backgroundColor: "#34495E",
-    borderColor: "#F1C40F",
+    backgroundColor: "#F7DC6F", // Light yellow for inputs
+    borderColor: "#F28D8D", // Light red border
     borderRadius: "10px",
-    color: "#fff",
+    color: "#D94F4F", // Red text
     padding: "12px 18px",
     fontSize: "1.1rem",
     width: "100%",
     transition: "all 0.3s ease",
     boxShadow: "none",
   },
-  inputFocus: {
-    borderColor: "#F39C12",
-    boxShadow: "0 0 5px rgba(243, 156, 18, 0.7)", // Smooth focus transition
-  },
   button: {
-    background: "linear-gradient(45deg, #F39C12, #8E44AD)", // Dynamic gradient button
+    background: "#F28D8D", // Light red background for the button
     border: "none",
     padding: "12px 30px",
     fontSize: "1.2rem",
@@ -63,12 +56,12 @@ const styles = {
     borderRadius: "25px",
     marginTop: "20px",
     boxShadow: "0 5px 15px rgba(0, 0, 0, 0.2)",
-    transition: "transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease",
+    width: "100%",
+    transition: "transform 0.3s ease, box-shadow 0.3s ease", // Added smooth transition for scaling and shadow
   },
   buttonHover: {
-    transform: "scale(1.05)", // Subtle scaling effect
-    boxShadow: "0 8px 30px rgba(0, 0, 0, 0.3)", // Glowing shadow
-    background: "linear-gradient(45deg, #8E44AD, #F39C12)", // Hover gradient effect
+    transform: "scale(1.05)", // Subtle scaling effect on hover
+    boxShadow: "0 8px 30px rgba(0, 0, 0, 0.3)", // Glowing shadow on hover
   },
 };
 
@@ -80,23 +73,27 @@ const LoginPage = ({ onLogin }) => {
   const handleLogin = (values) => {
     const { username, password } = values;
 
+    setLoading(true); // Start loading when the login process begins
+
     if (username === "admin" && password === "admin") {
       message.success("Login successful!");
-      onLogin(); // Set authentication to true
+      onLogin(); // Call the onLogin function passed as a prop
       navigate("/"); // Redirect to HomePage
     } else {
       message.error("Invalid credentials!");
     }
+
+    setLoading(false); // Stop loading after login attempt
   };
 
   return (
     <div style={styles.container}>
       <div style={styles.content}>
-        <h2 style={styles.heading}>Admin Portal</h2>
+        <h2 style={styles.heading}>Login</h2>
         <Form onFinish={handleLogin}>
           <Form.Item
-            name="username"
             label="Username"
+            name="username"
             rules={[{ required: true, message: "Please input your username!" }]}
             style={styles.formItem}
           >
@@ -104,13 +101,12 @@ const LoginPage = ({ onLogin }) => {
               placeholder="Enter username"
               style={styles.input}
               autoComplete="off"
-              onFocus={(e) => (e.target.style = { ...styles.input, ...styles.inputFocus })}
             />
           </Form.Item>
 
           <Form.Item
-            name="password"
             label="Password"
+            name="password"
             rules={[{ required: true, message: "Please input your password!" }]}
             style={styles.formItem}
           >
@@ -118,7 +114,6 @@ const LoginPage = ({ onLogin }) => {
               placeholder="Enter password"
               style={styles.input}
               autoComplete="off"
-              onFocus={(e) => (e.target.style = { ...styles.input, ...styles.inputFocus })}
             />
           </Form.Item>
 
@@ -129,8 +124,14 @@ const LoginPage = ({ onLogin }) => {
               block
               loading={loading}
               style={styles.button}
-              onMouseEnter={(e) => (e.target.style = { ...styles.button, ...styles.buttonHover })}
-              onMouseLeave={(e) => (e.target.style = styles.button)}
+              onMouseEnter={(e) => {
+                e.target.style.transform = "scale(1.05)"; // Apply scale on hover
+                e.target.style.boxShadow = "0 8px 30px rgba(0, 0, 0, 0.3)"; // Apply shadow on hover
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = "scale(1)"; // Reset scale
+                e.target.style.boxShadow = "0 5px 15px rgba(0, 0, 0, 0.2)"; // Reset shadow
+              }}
             >
               Login
             </Button>
